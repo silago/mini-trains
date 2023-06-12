@@ -94,6 +94,10 @@
 &lt;Patterns xmlns="urn:schemas-jetbrains-com:member-reordering-patterns"&gt;
     
 &lt;/Patterns&gt;</s:String>
+	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">Copyright (C) $CURRENT_YEAR$ White Sharx (https://whitesharx.com) - All Rights Reserved.
+Unauthorized copying of this file, via any medium is strictly prohibited.
+Proprietary and confidential.
+</s:String>
 	<s:Boolean x:Key="/Default/CodeStyle/Generate/=EqualityMembers/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/CodeStyle/Generate/=EqualityMembers/Options/=EqualityOperators/@EntryIndexedValue">False</s:String>
 	<s:String x:Key="/Default/CodeStyle/Generate/=EqualityMembers/Options/=ImplementIEquatable/@EntryIndexedValue">False</s:String>

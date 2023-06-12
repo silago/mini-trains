@@ -1,0 +1,54 @@
+{
+    "GameObjectToRender": {
+        "fileID": 919132149155446097,
+        "guid": "03ddd3257eb9568d78bc9445ba6abd31",
+        "type": 3
+    },
+    "PreviewCamera": {
+        "fileID": 2748762258018752351,
+        "guid": "f885b6dda2995453ca876362e26f1040",
+        "type": 3
+    },
+    "OrthographicCamera": true,
+    "ViewDirection": {
+        "x": -0.5773502588272095,
+        "y": -0.5773502588272095,
+        "z": -0.5773502588272095
+    },
+    "ViewRightDirection": {
+        "x": 0.5773502588272095,
+        "y": 0.0,
+        "z": -0.5773502588272095
+    },
+    "ViewUpDirection": {
+        "x": -0.40824827551841738,
+        "y": 0.8164965510368347,
+        "z": -0.40824827551841738
+    },
+    "PanOffset": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "ZoomLevel": 0.0,
+    "RenderWidth": 256,
+    "RenderHeight": 256,
+    "BackgroundColorOrTextureInfo": {
+        "backType": 0,
+        "BackgroundColor": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 0.0
+        },
+        "BackgroundTexture": {
+            "instanceID": 0
+        },
+        "UseBackgroundAlpha": true
+    },
+    "AnimationClipInfo": {
+        "PositionInClip": 0.0,
+        "AnimationClip": {
+            "instanceID": 0
+        }
+    }
+}
