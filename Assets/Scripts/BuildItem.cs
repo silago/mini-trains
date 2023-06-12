@@ -4,45 +4,45 @@ using UnityEngine;
 
 public class BuildItem : BaseItem {
   [SerializeField]
-  private Renderer renderer;
+  private Renderer itemRenderer;
 
   [SerializeField]
-  private Collider collider;
-  
+  private Collider itemCollider;
+
   private List<Collision> collisions = new List<Collision>();
   public bool HasIntersections => collisions.Count != 0;
 
-  public Collider Collider => collider;
+  public Collider Collider => itemCollider;
   public bool DoUpdate = false;
 
-  private void Awake() {
-    if (renderer == null) {
-      renderer = GetComponent<Renderer>();
+  protected virtual void Awake() {
+    if (itemRenderer == null) {
+      itemRenderer = GetComponent<Renderer>();
     }
 
-    if (collider == null) {
-      collider = GetComponent<Collider>();
+    if (itemCollider == null) {
+      itemCollider = GetComponent<Collider>();
     }
   }
 
   private void OnValidate() {
     if (DoUpdate) {
-      if (renderer == null) {
-        renderer = GetComponent<Renderer>();
+      if (itemRenderer == null) {
+        itemRenderer = GetComponent<Renderer>();
       }
 
-      if (collider == null) {
-        collider = GetComponent<Collider>();
+      if (itemCollider == null) {
+        itemCollider = GetComponent<Collider>();
       }
     }
   }
 
   public void SetWrongPlaceColor() {
-    renderer.material.color = Color.red;
+    itemRenderer.material.color = Color.red;
   }
 
   public void SetDefaultColor() {
-    renderer.material.color = Color.white;
+    itemRenderer.material.color = Color.white;
   }
 
   private void OnCollisionEnter(Collision collision) {

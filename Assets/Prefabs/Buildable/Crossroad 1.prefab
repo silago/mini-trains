@@ -178,7 +178,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687965433185290002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4.81, y: 4.81, z: 4.81}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -268,13 +268,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1687965433185290002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d1036c1178d45b9ae7a6a5f6a34d721, type: 3}
+  m_Script: {fileID: 11500000, guid: 16d38bfd0a53471e946d4ec528ea91a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slot: {fileID: 8919562204081965001}
-  renderer: {fileID: 8914106881902758689}
-  collider: {fileID: 153019719911053820}
+  itemRenderer: {fileID: 0}
+  itemCollider: {fileID: 0}
   DoUpdate: 0
+  railTrackElements:
+  - {fileID: 7961836340700537568}
+  - {fileID: 4343665933355372472}
+  - {fileID: 8111603613754850232}
 --- !u!1 &3959212949241363418
 GameObject:
   m_ObjectHideFlags: 0
@@ -720,6 +724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spline: {fileID: 2771932261823684081}
+  neighbours: []
   priority: 0
 --- !u!135 &8754033671436389004
 SphereCollider:
@@ -892,6 +897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spline: {fileID: 8027271903511032753}
+  neighbours: []
   priority: 0
 --- !u!4 &814279110926210384 stripped
 Transform:
@@ -1055,4 +1061,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spline: {fileID: 6534855413971684300}
+  neighbours: []
   priority: 0

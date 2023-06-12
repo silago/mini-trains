@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2741789095927844078}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -117,13 +117,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2741789095927844078}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d1036c1178d45b9ae7a6a5f6a34d721, type: 3}
+  m_Script: {fileID: 11500000, guid: 16d38bfd0a53471e946d4ec528ea91a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slot: {fileID: 6576016845436182680}
-  renderer: {fileID: 8620626089757608113}
-  collider: {fileID: 553180321016723897}
+  itemRenderer: {fileID: 0}
+  itemCollider: {fileID: 0}
   DoUpdate: 0
+  railTrackElements:
+  - {fileID: 2948655625842751412}
+  - {fileID: 2724728899351960131}
 --- !u!1 &4099920396760906914
 GameObject:
   m_ObjectHideFlags: 0
@@ -580,6 +583,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spline: {fileID: 2847668399236572543}
+  neighbours: []
   priority: 0
 --- !u!1001 &8927416036924288075
 PrefabInstance:
@@ -731,6 +735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spline: {fileID: 7177390672992401128}
+  neighbours: []
   priority: 0
 --- !u!4 &8966162094013680544 stripped
 Transform:

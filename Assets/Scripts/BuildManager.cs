@@ -126,7 +126,7 @@ public class BuildManager : MonoBehaviour {
       if (Physics.Raycast(ray, out hit, 100, floorLevel)) {
         Debug.Log(hit.transform.gameObject.name);
         var clampedPos = ClampToGrid(hit.point);
-        selectedItemPrefab.transform.position = clampedPos + GetMeshOffset(selectedItemPrefab);
+        selectedItemPrefab.transform.position = clampedPos ;//+ GetMeshOffset(selectedItemPrefab);
         cursor.transform.position = ClampToGrid(hit.point); 
 
         var hasIntersections = HasIntersections(selectedItemPrefab);
@@ -136,7 +136,7 @@ public class BuildManager : MonoBehaviour {
           selectedItemPrefab.SetDefaultColor();
         }
 
-        if (Input.GetMouseButton(0) && !hasIntersections) {
+        if (Input.GetMouseButtonUp(0) && !hasIntersections) {
           Build();
         }
       }

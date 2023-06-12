@@ -1,10 +1,14 @@
 using System;
+using System.Collections.Generic;
 using NaughtyBezierCurves;
 using UnityEngine;
 
 public class RailTrackElement : MonoBehaviour {
   [SerializeField]
   private NaughtyBezierCurves.BezierCurve3D spline;
+  
+  [SerializeField]
+  List<RailTrackElement> neighbours = new List<RailTrackElement>();
 
   [SerializeField]
   public int priority;
@@ -33,16 +37,6 @@ public class RailTrackElement : MonoBehaviour {
   }
 
   public NaughtyBezierCurves.BezierCurve3D Spline => spline;
-
-  private async void OnTriggerExit(Collider other) {
-    var gameController = await GameController.Instance();
-    gameController.ProcessSplineCollisionExit(this, other);
-  }
-
-  private async void OnTriggerEnter(Collider other) {
-    var gameController = await GameController.Instance();
-    gameController.ProcessSplineCollisionEnter(this, other);
-  }
 
   private void OnDrawGizmosSelected() {
     if (spline == null) {
