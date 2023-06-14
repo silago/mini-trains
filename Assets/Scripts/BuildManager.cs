@@ -37,9 +37,10 @@ public class BuildManager : MonoBehaviour {
   private BuildItem[] grid = new BuildItem[100 * 100];
 
   [SerializeField]
-  private float cellSize = 0.5f;
+  private int cellSize = 1;
 
   private int prevLayer;
+  private int index = 0;
 
   private int WorldToGrid(Vector3 input) {
     var x = Mathf.FloorToInt(input.x / cellSize) + 50;
@@ -98,7 +99,7 @@ public class BuildManager : MonoBehaviour {
     var result = Physics.OverlapBox(item.transform.position, bounds.extents * 0.99f, item.transform.rotation,
         buildItemLevel);
 
-    Debug.Log(result.Length);
+    //Debug.Log(result.Length);
     return result.Length > 0;
   }
 
@@ -124,7 +125,7 @@ public class BuildManager : MonoBehaviour {
       var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
       RaycastHit hit;
       if (Physics.Raycast(ray, out hit, 100, floorLevel)) {
-        Debug.Log(hit.transform.gameObject.name);
+        //Debug.Log(hit.transform.gameObject.name);
         var clampedPos = ClampToGrid(hit.point);
         selectedItemPrefab.transform.position = clampedPos ;//+ GetMeshOffset(selectedItemPrefab);
         cursor.transform.position = ClampToGrid(hit.point); 
@@ -158,9 +159,8 @@ public class BuildManager : MonoBehaviour {
   }
 
   private void Build() {
-    //cursor.gameObject.SetActive(false);
     selectedItemPrefab.Collider.gameObject.layer = prevLayer;
-    var name = selectedItemPrefab.name;
+    var name = selectedItemPrefab.name + index++;
     var buildItem = selectedItemPrefab;
 
     selectedItemPrefab = Instantiate(selectedItemPrefab, world.transform);
@@ -171,7 +171,7 @@ public class BuildManager : MonoBehaviour {
 
     var settings = selectedItemSettings;
 
-    buildItem.Initialize(settings);
+    buildItem.Initialize(settings, cellSize);
     contentManager.AddItem(buildItem);
   }
 

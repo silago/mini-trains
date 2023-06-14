@@ -6,7 +6,7 @@ public class RailLever : MonoBehaviour {
   private int index = 0;
 
   [SerializeField]
-  List<RailTrackElement> tracks = new List<RailTrackElement>();
+  List<RailItem> tracks = new List<RailItem>();
 
   public void Activate() {
     tracks.ForEach(x => x.priority = 0);

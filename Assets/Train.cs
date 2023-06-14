@@ -8,7 +8,7 @@ public class Train : BuildItem {
   private Rigidbody body;
 
   //[SerializeField]
-  //private RailTrackElement initialTrack;
+  //private RailItem initialTrack;
 
   [SerializeField]
   private float speedParameter;
@@ -19,10 +19,10 @@ public class Train : BuildItem {
   public Rigidbody Body => body;
 
   [SerializeField]
-  public RailTrackElement currentTrack;
+  public RailItem currentTrack;
 
-  [SerializeField]
-  private List<RailTrackElement> nextTracks = new List<RailTrackElement>();
+  //[SerializeField]
+  //private List<RailItem> nextTracks = new List<RailItem>();
 
   [SerializeField]
   private float t;
@@ -36,21 +36,18 @@ public class Train : BuildItem {
   [SerializeField]
   private bool reverse;
 
-  private RailTrackElement nextTrack = null;
+  private RailItem nextTrack = null;
 
   public void ProcessUpdate() { }
 
-  public bool active = false;
-
-  public override void Initialize(ItemSettings settings) {
-    base.Initialize(settings);
-    active = true;
+  public override void Initialize(ItemSettings settings, int size) {
+    base.Initialize(settings, size);
     currentLength = currentTrack.Spline.GetApproximateLength();
     currentSpeed = currentLength / speedParameter;
   }
 
   private void Update() {
-    if (!active) {
+    if (!Initialized) {
       return;
     }
 
@@ -66,32 +63,39 @@ public class Train : BuildItem {
       return;
     }
 
-    if (nextTracks.Count > 0 && nextTrack == null) {
-      var available = nextTracks.Where(x => IsAvailableByDirection(x, this.transform));
-      if (available.Any()) {
-        nextTrack = available.OrderByDescending(x => x.priority)
-            .First();
-      } else {
-        return;
-      }
+    //if (nextTracks.Count > 0 && nextTrack == null) {
+    //  var available = nextTracks.Where(x => IsAvailableByDirection(x, this.transform));
+    //  if (available.Any()) {
+    //    nextTrack = available.OrderByDescending(x => x.priority)
+    //        .First();
+    //  } else {
+    //    return;
+    //  }
 
-      nextTracks.Clear();
+    //  nextTracks.Clear();
+    nextTrack = reverse
+        ? currentTrack.GetStart()
+        : currentTrack.GetEnd();
 
-      currentTrack = nextTrack;
-      currentLength = currentTrack.Spline.GetApproximateLength();
-      currentSpeed = currentLength / speedParameter;
-
-      var firstPoint = currentTrack.GetLinearPoint(0);
-      var lastPoint = currentTrack.GetLinearPoint(1);
-      var firstDistance = Vector3.Distance(firstPoint, this.transform.position);
-      var lastDistance = Vector3.Distance(lastPoint, this.transform.position);
-
-      reverse = firstDistance > lastDistance;
-
-      nextTrack = null;
-      time = 0;
+    if (nextTrack == null) {
       return;
     }
+
+    currentTrack = nextTrack;
+    currentLength = currentTrack.Spline.GetApproximateLength();
+    currentSpeed = currentLength / speedParameter;
+
+    var firstPoint = currentTrack.GetLinearPoint(0);
+    var lastPoint = currentTrack.GetLinearPoint(1);
+    var firstDistance = Vector3.Distance(firstPoint, this.transform.position);
+    var lastDistance = Vector3.Distance(lastPoint, this.transform.position);
+
+    reverse = firstDistance > lastDistance;
+
+    nextTrack = null;
+    time = 0;
+    return;
+    //}
   }
 
   [SerializeField]
@@ -103,7 +107,7 @@ public class Train : BuildItem {
   [SerializeField]
   private GameObject nextPointB;
 
-  bool IsAvailableByDirection(RailTrackElement track, Transform item) {
+  bool IsAvailableByDirection(RailItem track, Transform item) {
     var startPoint = track.GetLinearPoint(0);
     var endPoint = track.GetLinearPoint(1);
     bool fromStart = Vector3.Distance(item.transform.position, startPoint)
@@ -128,9 +132,9 @@ public class Train : BuildItem {
   }
 
   private void OnTriggerEnter(Collider other) {
-    var track = other.gameObject.GetComponent<RailTrackElement>();
+    var track = other.gameObject.GetComponent<RailItem>();
 
-    if (!active) {
+    if (!Initialized) {
       currentTrack = track;
       return;
     }
@@ -141,22 +145,24 @@ public class Train : BuildItem {
   }
 
   private void OnTriggerExit(Collider other) {
-    if (!active) {
+    if (!Initialized) {
       return;
     }
 
-    var track = other.gameObject.GetComponent<RailTrackElement>();
+    var track = other.gameObject.GetComponent<RailItem>();
     if (track != null) {
       ProcessSplineCollisionExit(track);
     }
   }
 
-  public void ProcessSplineCollisionEnter(RailTrackElement track) {
+  public void ProcessSplineCollisionEnter(RailItem track) {
     //var this = collider.gameObject.GetComponent<Train>();
 
     if (track == this.currentTrack) {
       return;
     }
+
+    /*
 
     var currentFirst = this.currentTrack.Spline.KeyPoints[0].Position;
     var currentLast = this.currentTrack.Spline.KeyPoints[^1].Position;
@@ -183,10 +189,11 @@ public class Train : BuildItem {
     }
 
     this.nextTracks.Add(track);
+    */
   }
 
-  public void ProcessSplineCollisionExit(RailTrackElement railTrackElement) {
-    nextTracks.Remove(railTrackElement);
+  public void ProcessSplineCollisionExit(RailItem railTrackElement) {
+    //nextTracks.Remove(railTrackElement);
   }
 
   private void OnDrawGizmos() {
