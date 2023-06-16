@@ -159,19 +159,19 @@ public class BuildManager : MonoBehaviour {
   }
 
   private void Build() {
-    selectedItemPrefab.Collider.gameObject.layer = prevLayer;
+    selectedItemPrefab.gameObject.layer = prevLayer;
     var name = selectedItemPrefab.name + index++;
     var buildItem = selectedItemPrefab;
 
     selectedItemPrefab = Instantiate(selectedItemPrefab, world.transform);
     selectedItemPrefab.name = name;
 
-    prevLayer = selectedItemPrefab.Collider.gameObject.layer;
+    prevLayer = selectedItemPrefab.gameObject.layer;
     selectedItemPrefab.Collider.gameObject.layer = tmpLayer;
 
     var settings = selectedItemSettings;
 
-    buildItem.Initialize(settings, cellSize);
+    buildItem.Initialize(cellSize);
     contentManager.AddItem(buildItem);
   }
 
@@ -195,8 +195,8 @@ public class BuildManager : MonoBehaviour {
     }
     selectedItemPrefab = Instantiate(settings.Prefab, world.transform);
 
-    prevLayer = selectedItemPrefab.Collider.gameObject.layer;
-    selectedItemPrefab.Collider.gameObject.layer = tmpLayer;
+    prevLayer = selectedItemPrefab.gameObject.layer;
+    selectedItemPrefab.gameObject.layer = tmpLayer;
     cursor.gameObject.SetActive(true);
   }
 }

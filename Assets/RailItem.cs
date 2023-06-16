@@ -5,22 +5,16 @@ using NaughtyBezierCurves;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class RailItem : BuildItem{
-  //public RailItem railTrackElement;
+public class RailItem : BuildItem {
   private const float MinDistance = 0.75f;
-
-  [SerializeField]
-  private RailSwitcher railSwitcherEnd;
-
-  [SerializeField]
-  private RailSwitcher railSwitcherStart;
 
   [SerializeField]
   private NaughtyBezierCurves.BezierCurve3D spline;
 
-  //[SerializeField]
+  [SerializeField]
   private List<RailItem> neighboursStart = new List<RailItem>();
 
+  [SerializeField]
   private List<RailItem> neighboursEnd = new List<RailItem>();
 
   [SerializeField]
@@ -28,44 +22,17 @@ public class RailItem : BuildItem{
 
   public int Priority => priority;
 
-  public float LinearLength {
-    get {
-      var result = 0f;
-      for (var i = 0; i < spline.KeyPointsCount - 1; i++) {
-        result += Vector3.Distance(spline.KeyPoints[i].Position, spline.KeyPoints[i + 1].Position);
-      }
-      return result;
-    }
-  }
-  
-  public void AddEnd(RailItem railItem) {
-    neighboursEnd.Add(railItem);
-  }
-  
-  public void AddStart(RailItem railItem) {
-    neighboursStart.Add(railItem);
-  }
-  
+
   public RailItem GetStart() {
-    return railSwitcherStart.Next();
-    //return neighboursStart.Any() ? neighboursStart.First() : null;
+    return neighboursStart.Any() ? neighboursStart.OrderByDescending(x => x.priority).First() : null;
   }
-  
+
   public RailItem GetEnd() {
-    return railSwitcherEnd.Next();
-    //return neighboursEnd.Any() ? neighboursEnd.First() : null;
-  }
-  
-
-  protected override void Awake() {
-    base.Awake();
-    
-    railSwitcherEnd.gameObject.SetActive(false);
-    railSwitcherStart.gameObject.SetActive(false);
+    return neighboursEnd.Any() ? neighboursEnd.OrderByDescending(x => x.priority).First() : null;
   }
 
-  public override void Initialize(ItemSettings settings, int size) {
-    base.Initialize(settings, size);
+  public override void Initialize(int size) {
+    base.Initialize(size);
     var resultsA = Physics.OverlapBox(GetLinearPoint(0), 0.5f * Vector3.one).ToList();
     var resultsB = Physics.OverlapBox(GetLinearPoint(1), 0.5f * Vector3.one).ToList();
     var results = resultsA.Concat(resultsB);
@@ -136,17 +103,17 @@ public class RailItem : BuildItem{
         neighboursEnd.Add(track);
         track.neighboursEnd.Add(this);
       }
-      
+
       UpdateRailSwitchers();
       track.UpdateRailSwitchers();
     }
   }
-  
+
   public void UpdateRailSwitchers() {
     //check existing switcher
-  
-    railSwitcherEnd.Initialize(neighboursEnd);
-    railSwitcherStart.Initialize(neighboursStart);
+
+    //railSwitcherEnd.Initialize(neighboursEnd);
+    //railSwitcherStart.Initialize(neighboursStart);
   }
 
   bool IsAvailableByDirection(RailItem other, float selfIndex, float otherIndex) {
@@ -196,7 +163,7 @@ public class RailItem : BuildItem{
 
   private void OnDrawGizmos() {
     Gizmos.color = Color.black;
-    ;
+    
     Gizmos.DrawLine(GetLinearPoint(0) + Vector3.up
         , GetLinearPoint(0) + Spline.GetRotation(0f, Vector3.up) * Vector3.forward + Vector3.up);
     Gizmos.DrawLine(GetLinearPoint(1) + Vector3.up,

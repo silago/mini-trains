@@ -38,11 +38,11 @@ public class BuildItem : BaseItem {
   }
 
   public void SetWrongPlaceColor() {
-    itemRenderer.material.color = Color.red;
+    //itemRenderer.material.color = Color.red;
   }
 
   public void SetDefaultColor() {
-    itemRenderer.material.color = Color.white;
+    //itemRenderer.material.color = Color.white;
   }
 
   private void OnCollisionEnter(Collision collision) {

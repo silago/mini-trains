@@ -40,8 +40,8 @@ public class Train : BuildItem {
 
   public void ProcessUpdate() { }
 
-  public override void Initialize(ItemSettings settings, int size) {
-    base.Initialize(settings, size);
+  public override void Initialize(int size) {
+    base.Initialize(size);
     currentLength = currentTrack.Spline.GetApproximateLength();
     currentSpeed = currentLength / speedParameter;
   }

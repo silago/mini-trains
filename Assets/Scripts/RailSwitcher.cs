@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class RailSwitcher : MonoBehaviour {
@@ -12,16 +11,15 @@ public class RailSwitcher : MonoBehaviour {
 
   private int selectedIndex = 0;
 
-  private List<RailItem> rails;
+  [SerializeField]
+  private List<RailItem> railItems;
 
   private void Awake() {
-    //gameObject.SetActive(false);
+    inactiveArrows.ForEach(x=>x.SetActive(false));
+    activeArrows.ForEach(x=>x.SetActive(false));
   }
 
-  public void Initialize(List<RailItem> railItems) {
-    railItems = railItems.OrderByDescending(x => x.priority).ToList();
-    rails = railItems;
-
+  public void Initialize() {
     if (railItems.Count <= 1) {
       gameObject.SetActive(false);
       return;
@@ -63,8 +61,8 @@ public class RailSwitcher : MonoBehaviour {
 
   public void Switch() {
     selectedIndex++;
-    selectedIndex %= rails.Count;
-    for (var index = 0; index < rails.Count; index++) {
+    selectedIndex %= railItems.Count;
+    for (var index = 0; index < railItems.Count; index++) {
       if (activeArrows.Count < index + 1) {
         break;
       }
@@ -75,6 +73,9 @@ public class RailSwitcher : MonoBehaviour {
       activeArrow.SetActive(index == selectedIndex);
       inactiveArrow.SetActive(index != selectedIndex);
     }
+    
+    railItems.ForEach(x=>x.priority = 0);
+    railItems[selectedIndex].priority++;
   }
 
   private void OnMouseDown() {
@@ -82,6 +83,6 @@ public class RailSwitcher : MonoBehaviour {
   }
 
   public RailItem Next() {
-    return rails.Count != 0 ? rails[selectedIndex] : null;
+    return railItems.Count != 0 ? railItems[selectedIndex] : null;
   }
 }
